@@ -127,10 +127,6 @@
       "type": "string",
       "format": "uri",
       "description": "Marketing or landing page for the module."
-    },
-    "verified": {
-      "type": "boolean",
-      "description": "Set only by hub maintainers during review. Do not set in PRs — it will be rejected by CI."
     }
   }
 }

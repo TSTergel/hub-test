@@ -1,0 +1,28 @@
+name: Tooling / schema / workflow
+description: Bug or feature request for the registry itself, the build script, the schemas, or the GitHub Actions workflows.
+labels: ["tooling"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - build-registry.mjs
+        - manifest.schema.json
+        - validate workflow
+        - build-registry workflow
+        - docs
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What's the issue or request?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Logs, CI run link, repro steps — whatever helps a maintainer triage.

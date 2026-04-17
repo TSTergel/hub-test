@@ -11,7 +11,7 @@
     "name": "Mailmeteor",
     "url": "https://mailmeteor.com"
   },
-  "endpoint": "https://1074-2001-861-8bb3-5ba0-5c9-6032-a51a-45f9.ngrok-free.app",
+  "endpoint": "https://example.com/assistant",
   "supported_contexts": ["thread"],
   "privacy_url": "https://example.com/privacy",
   "support_url": "https://example.com/support",

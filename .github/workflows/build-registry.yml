@@ -1,0 +1,64 @@
+name: Build registry
+
+on:
+  push:
+    branches: [main]
+    # Ignore pushes that only touch registry.json to avoid self-triggering loops.
+    paths-ignore:
+      - "registry.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-registry
+
+jobs:
+  build:
+    name: Build and publish registry.json
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build registry.json
+        run: npm run build
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+
+      - name: Commit and push registry.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet -- registry.json; then
+            echo "Nothing to commit, no changes to registry.json"
+            exit 0
+          fi
+
+          git add registry.json
+          git commit -m "chore(registry): rebuild from ${GITHUB_SHA::7} [skip ci]"
+
+          # A human merge or a queued build could have landed between checkout
+          # and push. Rebase onto the remote tip so the push is fast-forward.
+          # Retry a few times to survive a tight race.
+          for attempt in 1 2 3; do
+            git pull --rebase --autostash origin main
+            if git push; then
+              exit 0
+            fi
+            echo "push failed on attempt $attempt, retrying…"
+            sleep 2
+          done
+          echo "push failed after 3 attempts"
+          exit 1

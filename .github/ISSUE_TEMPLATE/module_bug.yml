@@ -1,0 +1,41 @@
+name: Module bug
+description: A specific module is not rendering correctly in the hub or extension.
+labels: ["bug", "module"]
+body:
+  - type: input
+    id: module_id
+    attributes:
+      label: Module id
+      description: The folder name under `blocks/`, e.g. `hello-world`
+    validations:
+      required: true
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you see instead?
+      placeholder: |
+        Expected: the sidebar block renders a grid of contact fields.
+        Got: the block is blank with a console error "Cannot read properties of undefined".
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Install the module
+        2. Open a Gmail thread with …
+        3. …
+  - type: input
+    id: extension_version
+    attributes:
+      label: Extension version
+      description: Find it at chrome://extensions.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirm
+      options:
+        - label: I checked that this isn't a privacy/abuse report (those go to security@mailmeteor.com).
+          required: true

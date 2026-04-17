@@ -13,7 +13,6 @@ This example renders a **grid** block showing mock contact details for a fiction
 | File | Purpose |
 | --- | --- |
 | `manifest.json` | Module metadata — name, description, endpoint URL, author, category, etc. Validated in CI against `/schema/manifest.schema.json`. |
-| `preview.json` | A mock response conforming to the sidebar render schema. The hub uses this to show a live preview of the module without calling the real endpoint. |
 | `icon.svg` | Module icon shown in the hub. SVG preferred; PNG also accepted (≥ 96×96, square). |
 | `README.md` | This file. |
 
@@ -52,7 +51,7 @@ A JSON object matching the sidebar render schema. At minimum:
 }
 ```
 
-See `preview.json` for a complete working example and the main repo `README.md` for the full block schema reference (grid, list, actions).
+See the main repo `README.md` for the full block schema reference (grid, list, actions).
 
 ### Block types supported
 
@@ -73,18 +72,16 @@ If the user isn't connected to your service yet, return a top-level `description
 
 ## Using this folder as a template
 
-1. Copy the `modules/example/` folder to `modules/<your-module-id>/`.
+1. Copy the `blocks/example/` folder to `blocks/<your-module-id>/`.
 2. Rename `id` in `manifest.json` to match the new folder name.
 3. Update `name`, `description`, `endpoint`, `author`, `privacy_url`, and the rest.
 4. Replace `icon.svg` with your own icon.
-5. Update `preview.json` to reflect the shape of your real endpoint response.
-6. Open a PR. CI will validate your `manifest.json` against the schema and render your `preview.json` in the PR preview.
+5. Open a PR. CI will validate your `manifest.json` against the schema.
 
 ## Requirements before submission
 
 - [ ] `endpoint` is served over HTTPS.
 - [ ] `privacy_url` points to a real, public privacy policy.
-- [ ] `preview.json` reflects the actual shape your endpoint returns.
 - [ ] The endpoint handles the documented request payload.
 - [ ] The endpoint responds in under 3 seconds for a typical request.
 
