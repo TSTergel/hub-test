@@ -41,19 +41,20 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          if git diff --quiet -- registry.json; then
+          git add registry.json
+
+          if git diff --staged --quiet -- registry.json; then
             echo "Nothing to commit, no changes to registry.json"
             exit 0
           fi
 
-          git add registry.json
           git commit -m "chore(registry): rebuild from ${GITHUB_SHA::7} [skip ci]"
 
           # A human merge or a queued build could have landed between checkout
           # and push. Rebase onto the remote tip so the push is fast-forward.
           # Retry a few times to survive a tight race.
           for attempt in 1 2 3; do
-            git pull --rebase --autostash origin main
+            git pull --rebase --autostash origin ${{ github.ref_name }}
             if git push; then
               exit 0
             fi
