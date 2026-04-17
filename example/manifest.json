@@ -1,0 +1,19 @@
+{
+  "$schema": "../schema/manifest.schema.json",
+  "id": "example",
+  "name": "Example Module",
+  "description": "A template module showing how to build a custom sidebar block. Copy this folder as a starting point for your own module.",
+  "version": "1.0.0",
+  "category": "examples",
+  "tags": ["template", "starter", "example"],
+  "icon": "icon.svg",
+  "author": {
+    "name": "Mailmeteor",
+    "url": "https://mailmeteor.com"
+  },
+  "endpoint": "https://example.com/assistant",
+  "supported_contexts": ["thread"],
+  "privacy_url": "https://example.com/privacy",
+  "support_url": "https://example.com/support",
+  "homepage": "https://example.com"
+}
