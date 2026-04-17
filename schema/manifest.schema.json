@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://modules.mailmeteor.com/schema/manifest.schema.json",
+  "title": "Module Manifest",
+  "description": "Schema for module manifest.json files. Every module in the /modules directory must have a manifest.json that validates against this schema.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "description",
+    "version",
+    "category",
+    "icon",
+    "author",
+    "endpoint",
+    "supported_contexts",
+    "privacy_url"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this schema for IDE autocomplete."
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$",
+      "description": "Unique module identifier. Must match the folder name exactly. Lowercase letters, digits, and hyphens only. 3-40 characters."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 60,
+      "description": "Human-readable module name shown in the hub and sidebar."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 200,
+      "description": "Short description shown on the module card. Keep it to one sentence."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version (MAJOR.MINOR.PATCH). Bump when the manifest or endpoint behavior changes."
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "examples",
+        "productivity",
+        "developer-tools",
+        "crm",
+        "support",
+        "analytics",
+        "finance",
+        "communication",
+        "calendar",
+        "other"
+      ],
+      "description": "Single primary category. Used for faceted filtering in the hub."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$",
+        "maxLength": 24
+      },
+      "maxItems": 10,
+      "uniqueItems": true,
+      "description": "Freeform tags for search. Lowercase and hyphens only."
+    },
+    "icon": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9._-]+\\.(svg|png)$",
+      "description": "Filename of the icon, relative to the module folder. Must be an SVG or a square PNG ≥ 96×96."
+    },
+    "author": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        }
+      }
+    },
+    "endpoint": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://",
+      "description": "HTTPS URL the extension will POST to when the sidebar needs content. Must be HTTPS."
+    },
+    "supported_contexts": {
+      "type": "array",
+      "items": {
+        "enum": ["thread", "home", "list", "search"]
+      },
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Which sidebar contexts this module supports. The extension only calls the endpoint in these contexts."
+    },
+    "privacy_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://",
+      "description": "Required. Public URL of the module's privacy policy. Shown in the install consent dialog."
+    },
+    "support_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL where users can get help. Can be a docs page, mailto:, or a contact form."
+    },
+    "homepage": {
+      "type": "string",
+      "format": "uri",
+      "description": "Marketing or landing page for the module."
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "Set only by hub maintainers during review. Do not set in PRs — it will be rejected by CI."
+    }
+  }
+}
